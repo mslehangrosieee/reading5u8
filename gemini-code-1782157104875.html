@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Tập Trắc Nghiệm Tương Tác - Ms Lê Hằng English</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #8854C0, #00C9A7);
+            --bg-light: #f7f9fc;
+            --text-main: #2d3748;
+            --correct-color: #00D26A;
+            --incorrect-color: #FF4757;
+            --card-shadow: 0 8px 0 #e2e8f0;
+            --btn-shadow-correct: 0 6px 0 #00a854;
+            --btn-shadow-incorrect: 0 6px 0 #cc2936;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Quicksand', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #8854C0;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(253, 203, 110, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(0, 201, 167, 0.2) 0%, transparent 40%),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ctext y='30' x='10' font-size='20'%3E🌸%3C/text%3E%3Ctext y='80' x='60' font-size='20'%3E✨%3C/text%3E%3Ctext y='40' x='70' font-size='18'%3E🎈%3C/text%3E%3Ctext y='90' x='15' font-size='22'%3E⭐%3C/text%3E%3C/svg%3E");
+            background-attachment: fixed;
+            animation: backgroundMove 20s linear infinite;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes backgroundMove {
+            0% { background-position: 0% 0%, 0% 0%, 0% 0%; }
+            100% { background-position: 0% 0%, 0% 0%, 100px 100px; }
+        }
+
+        /* Top Control Bar */
+        .top-bar {
+            background: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 4px solid #e2e8f0;
+        }
+
+        .teacher-info h3 {
+            font-size: 0.95rem;
+            color: #8854C0;
+            font-weight: 900;
+        }
+
+        .timer-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .timer-btn {
+            background: #FDCB6E;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #d8a236;
+            transition: all 0.1s;
+        }
+        .timer-btn:active {
+            transform: translateY(4px);
+            box-shadow: none;
+        }
+
+        #timer-display {
+            font-size: 1.2rem;
+            font-weight: 900;
+            background: #eef2f7;
+            padding: 5px 15px;
+            border-radius: 12px;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .submit-all-btn {
+            background: #00C9A7;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 15px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #00967c;
+        }
+        .submit-all-btn:active {
+            transform: translateY(4px);
+            box-shadow: none;
+        }
+
+        /* Main Workspace Splitted */
+        .workspace {
+            display: flex;
+            flex: 1;
+            height: calc(100vh - 65px);
+            overflow: hidden;
+            padding: 15px;
+            gap: 15px;
+        }
+
+        .panel {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            overflow-y: auto;
+            padding: 25px;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+            border: 4px solid white;
+        }
+
+        /* Reading Passage Style */
+        .passage-section {
+            background: #fdfbf7;
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 2px dashed #8854C0;
+        }
+
+        .passage-title {
+            color: #8854C0;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .passage-text {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .translation-btn {
+            background: #e8f4fd;
+            color: #1da1f2;
+            border: 2px solid #1da1f2;
+            padding: 6px 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+        .translation-btn:hover {
+            background: #1da1f2;
+            color: white;
+        }
+
+        .translation-content {
+            display: none;
+            background: #f0fdf4;
+            border-left: 4px solid #00D26A;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-style: italic;
+            font-size: 0.95rem;
+        }
+
+        /* Glossary Table */
+        .glossary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .glossary-table th, .glossary-table td {
+            border: 1px solid #e2e8f0;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .glossary-table th {
+            background-color: #8854C0;
+            color: white;
+            font-weight: 700;
+        }
+
+        .glossary-table tr:nth-child(even) {
+            background-color: #f7f9fc;
+        }
+
+        /* Exercise Right Style */
+        .exercise-block {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: var(--card-shadow);
+            border: 2px solid #e2e8f0;
+        }
+
+        .question-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+            color: #2d3748;
+        }
+
+        /* Inline blank click for text-completion */
+        .inline-blank {
+            background: #edf2f7;
+            border-bottom: 3px solid #8854C0;
+            padding: 2px 10px;
+            font-weight: 700;
+            color: #8854C0;
+            cursor: pointer;
+            border-radius: 6px;
+            margin: 0 4px;
+            display: inline-block;
+        }
+
+        /* Options layout */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .options-grid { grid-template-columns: 1fr; }
+            .workspace { flex-direction: column; height: auto; }
+        }
+
+        .option-btn {
+            background: white;
+            border: 2px solid #e2e8f0;
+            padding: 12px 15px;
+            border-radius: 16px;
+            cursor: pointer;
+            font-weight: 700;
+            text-align: left;
+            box-shadow: 0 4px 0 #e2e8f0;
+            transition: transform 0.1s, background-color 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .option-btn:hover {
+            transform: scale(1.02);
+        }
+
+        .option-btn.correct {
+            background-color: #d4edda !important;
+            border-color: var(--correct-color) !important;
+            color: #155724 !important;
+            box-shadow: var(--btn-shadow-correct) !important;
+        }
+
+        .option-btn.incorrect {
+            background-color: #f8d7da !important;
+            border-color: var(--incorrect-color) !important;
+            color: #721c24 !important;
+            box-shadow: var(--btn-shadow-incorrect) !important;
+            animation: shake 0.3s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
+
+        /* Explanation Box */
+        .explanation-box {
+            display: none;
+            background: #fff9db;
+            border-left: 5px solid #f59f00;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 15px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .explanation-box h4 {
+            color: #f59f00;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        /* Result Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border: 6px solid #8854C0;
+            animation: zoomIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.7); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-score {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #8854C0;
+            margin: 20px 0;
+        }
+
+        .modal-comment {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #4a5568;
+        }
+
+        .close-modal-btn {
+            background: #FDCB6E;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 15px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #d8a236;
+        }
+
+        /* Confetti Canvas */
+        #confetti-canvas {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 2500;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- Top Control Bar -->
+    <div class="top-bar">
+        <div class="teacher-info">
+            <h3>Giáo viên tạo: Ms Lê Hằng English ⭐</h3>
+        </div>
+        <div class="timer-container">
+            <button class="timer-btn" id="timer-toggle-btn" onclick="toggleTimer()">BẮT ĐẦU TÍNH GIỜ LÀM BÀI</button>
+            <div id="timer-display">10:00</div>
+        </div>
+        <button class="submit-all-btn" onclick="submitAssessment()">NỘP BÀI 🎉</button>
+    </div>
+
+    <!-- Main Workspace Split-Screen -->
+    <div class="workspace">
+        
+        <!-- LEFT PANEL: Reading Passages & Glossaries -->
+        <div class="panel" id="left-panel">
+            
+            <!-- EXERCISE 2 - PASSAGE 1 -->
+            <div class="passage-section">
+                <div class="passage-title">❶ 🌟 Discover Our Beautiful Traditions! 🌟</div>
+                <p class="passage-text">
+                    Do you want to learn about Vietnamese culture? It’s a great <strong>(1) ______</strong> of history and beautiful customs! We have a special way of life that brings families together.<br><br>
+                    For example, during Tet (Lunar New Year), we clean our houses and cook traditional food like Banh Chung. Children are very happy to get "lucky money" in red envelopes. It’s a time <strong>(2) ______</strong> visiting our grandparents and <strong>(3) ______</strong> people. Our traditional ao dai dress is also very <strong>(4) ______</strong> symbol of our country. Come and see our traditions! They are very interesting!
+                </p>
+                <button class="translation-btn" onclick="toggleTranslation('trans-ex2-1')">Mở dịch đoạn này 🌟</button>
+                <div class="translation-content" id="trans-ex2-1">
+                    Bạn có muốn tìm hiểu về văn hóa Việt Nam không? Đó là một sự kết hợp tuyệt vời giữa lịch sử và những phong tục đẹp đẽ! Chúng ta có một lối sống đặc biệt giúp gắn kết các gia đình lại với nhau.<br>Ví dụ, trong dịp Tết (Tết Nguyên Đán), chúng ta dọn dẹp nhà cửa và nấu những món ăn truyền thống như Bánh Chưng. Trẻ em rất vui sướng khi nhận được "tiền lì xì" trong những chiếc bao thư màu đỏ. Đó là khoảng thời gian dành cho việc đi thăm ông bà và thể hiện sự tôn trọng mọi người. Trang phục áo dài truyền thống của chúng ta cũng là một biểu tượng rất đặc trưng của đất nước. Hãy đến và chiêm ngưỡng những truyền thống của chúng tôi! Chúng vô cùng thú vị!
+                </div>
+
+                <table class="glossary-table">
+                    <thead>
+                        <tr><th>Từ vựng</th><th>Loại từ</th><th>Nghĩa tiếng Việt</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Tradition</td><td>(n)</td><td>Truyền thống</td></tr>
+                        <tr><td>Culture</td><td>(n)</td><td>Văn hóa</td></tr>
+                        <tr><td>Custom</td><td>(n)</td><td>Phong tục, tập quán</td></tr>
+                        <tr><td>Envelope</td><td>(n)</td><td>Phong bì, bao thư</td></tr>
+                        <tr><td>Respect</td><td>(v/n)</td><td>Tôn trọng, sự kính trọng</td></tr>
+                        <tr><td>Symbol</td><td>(n)</td><td>Biểu tượng</td></tr>
+                        <tr><td>Interesting</td><td>(adj)</td><td>Thú vị</td></tr>
+                        <tr><td>Lunar New Year</td><td>(n)</td><td>Tết Nguyên Đán</td></tr>
+                        <tr><td>History</td><td>(n)</td><td>Lịch sử</td></tr>
+                        <tr><td>Traditional</td><td>(adj)</td><td>Thuộc về truyền thống</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- EXERCISE 2 - PASSAGE 2 -->
+            <div class="passage-section">
+                <div class="passage-title">❷ 🌸 Visit Sa Dec Flower Village! 🌸</div>
+                <p class="passage-text">
+                    Welcome to Sa Dec Flower Village in Dong Thap! It is <strong>(1) ______</strong> very famous place in the Mekong Delta.<br><br>
+                    Every year, especially before Tet (Lunar New Year), the village becomes very <strong>(2) ______</strong>. You can see thousands of colourful flowers, like roses, marigolds, and chrysanthemums. Farmers grow the flowers on high wooden <strong>(3) ______</strong> because of the water below. It is a beautiful sight!<br><br>
+                    If you like nature and taking photos, you must visit here. You can enjoy <strong>(4) ______</strong> the unique atmosphere and buy some beautiful flowers. Don't miss this amazing experience!
+                </p>
+                <button class="translation-btn" onclick="toggleTranslation('trans-ex2-2')">Mở dịch đoạn này 🌟</button>
+                <div class="translation-content" id="trans-ex2-2">
+                    Chào mừng bạn đến với Làng hoa Sa Đéc ở Đồng Tháp! Đây là một nơi rất nổi tiếng ở Đồng bằng sông Cửu Long.<br>Hàng năm, đặc biệt là trước Tết, ngôi làng trở nên vô cùng rực rỡ sắc màu. Bạn có thể nhìn thấy hàng ngàn bông hoa rực rỡ, như hoa hồng, hoa vạn thọ và hoa cúc. Người nông dân trồng hoa trên những giàn gỗ cao vì có nước ở phía dưới. Đó là một cảnh tượng tuyệt đẹp!<br>Nếu bạn yêu thiên nhiên và thích chụp ảnh, bạn nhất định phải ghé thăm nơi này. Bạn có thể tận hưởng việc ngắm nhìn bầu không khí độc đáo và mua một số bông hoa đẹp. Đừng bỏ lỡ trải nghiệm tuyệt vời này!
+                </div>
+
+                <table class="glossary-table">
+                    <thead>
+                        <tr><th>Từ vựng</th><th>Loại từ</th><th>Nghĩa tiếng Việt</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Famous</td><td>(adj)</td><td>Nổi tiếng</td></tr>
+                        <tr><td>Colourful</td><td>(adj)</td><td>Rực rỡ sắc màu</td></tr>
+                        <tr><td>Marigold</td><td>(n)</td><td>Hoa vạn thọ</td></tr>
+                        <tr><td>Chrysanthemum</td><td>(n)</td><td>Hoa cúc</td></tr>
+                        <tr><td>Wooden</td><td>(adj)</td><td>Làm bằng gỗ</td></tr>
+                        <tr><td>Unique</td><td>(adj)</td><td>Độc đáo, duy nhất</td></tr>
+                        <tr><td>Atmosphere</td><td>(n)</td><td>Bầu không khí</td></tr>
+                        <tr><td>Experience</td><td>(n)</td><td>Trải nghiệm</td></tr>
+                        <tr><td>Sight</td><td>(n)</td><td>Cảnh tượng, tầm nhìn</td></tr>
+                        <tr><td>Delta</td><td>(n)</td><td>Đồng bằng, vùng châu thổ</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- EXERCISE 3 - PASSAGE 1 -->
+            <div class="passage-section">
+                <div class="passage-title">❸ 🍲 Tet Holiday Food 🍲</div>
+                <p class="passage-text">
+                    Tet is the biggest festival in Vietnam. To <strong>(1) _______</strong> Tet, Vietnamese people make many tasty <strong>(2) _______</strong> foods. The most important food includes Chung cakes, sausages, boiled chicken, spring rolls, and sticky rice. Chung cake is made of sticky rice, pork, green beans, and other spices, wrapped in green leaves; <strong>(3) _______</strong>, this cake needs a lot of preparation. This cake can be kept for a long time, even though the weather is often humid during Tet. Other significant foods that cannot be missed to worship the ancestors are sausages, spring rolls, and sticky rice. Because sausages are difficult <strong>(4) ______</strong>, people often buy them from famous suppliers. However, sticky rice and spring rolls are easier to prepare and must be <strong>(5) _______</strong> immediately after they are cooked, so they are often made <strong>(6) _______</strong> home.
+                </p>
+                <button class="translation-btn" onclick="toggleTranslation('trans-ex3-1')">Mở dịch đoạn này 🌟</button>
+                <div class="translation-content" id="trans-ex3-1">
+                    Tết là lễ hội lớn nhất ở Việt Nam. Để ăn mừng Tết, người Việt Nam làm nhiều món ăn truyền thống thơm ngon. Thức ăn quan trọng nhất bao gồm bánh Chưng, giò chả, gà luộc, nem rán (chả giò), và xôi. Bánh Chưng được làm từ gạo nếp, thịt lợn, đậu xanh và các gia vị khác, gói trong lá xanh; tuy nhiên, loại bánh này cần rất nhiều công đoạn chuẩn bị. Bánh này có thể bảo quản được lâu, mặc dù thời tiết trong dịp Tết thường ẩm ướt. Những món ăn quan trọng khác không thể thiếu để thờ cúng tổ tiên là giò chả, nem rán và xôi. Vì giò chả khó tự làm nên người ta thường mua từ các nhà cung cấp nổi tiếng. Tuy nhiên, xôi và nem rán dễ chuẩn bị hơn và phải được phục vụ ngay sau khi nấu chín nên chúng thường được làm tại nhà.
+                </div>
+
+                <table class="glossary-table">
+                    <thead>
+                        <tr><th>Từ vựng</th><th>Loại từ</th><th>Nghĩa tiếng Việt</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Celebrate</td><td>(v)</td><td>Ăn mừng, kỷ niệm</td></tr>
+                        <tr><td>Tasty</td><td>(adj)</td><td>Ngon miệng</td></tr>
+                        <tr><td>Preparation</td><td>(n)</td><td>Sự chuẩn bị</td></tr>
+                        <tr><td>Humid</td><td>(adj)</td><td>Ẩm ướt</td></tr>
+                        <tr><td>Significant</td><td>(adj)</td><td>Quan trọng, có ý nghĩa</td></tr>
+                        <tr><td>Worship</td><td>(v)</td><td>Thờ cúng, tôn kính</td></tr>
+                        <tr><td>Ancestor</td><td>(n)</td><td>Tổ tiên</td></tr>
+                        <tr><td>Supplier</td><td>(n)</td><td>Nhà cung cấp</td></tr>
+                        <tr><td>Serve</td><td>(v)</td><td>Phục vụ, dọn món</td></tr>
+                        <tr><td>Spice</td><td>(n)</td><td>Gia vị</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- EXERCISE 3 - PASSAGE 2 -->
+            <div class="passage-section">
+                <div class="passage-title">❹ 👰 Wedding Traditions around the World 👰</div>
+                <p class="passage-text">
+                    A lovely custom from France comes in the form of a two handled cup called the "coup de marriage". The cup was saved to be used from one <strong>(1) _________</strong> to another, of course, <strong>(2) _________</strong> custom has long been established of drinking a toast to one another, but the two handled cup adds a special touch to the weddings of today. Until recently, these cups <strong>(3) _________</strong> very difficult to find. Drinking from the same cup denotes "togetherness".<br><br>
+                    At a wedding in Germany, the bride and groom hold candles trimmed with flowers and ribbons. This beautiful old <strong>(4) _________</strong> could be included in a wedding of today, with the couple placing candles they have carried to the altar beside their unity candle. These candles could then be used <strong>(5) _________</strong> the unity candle at the end of the ceremony.<br><br>
+                    Flowers have always played a very <strong>(6) _________</strong> part in Indian weddings. A lasting tradition passed along from generation to generation is that of the brother of the groom sprinkling flower petals over the heads of the couple following the wedding vows and at the end of the ceremony.
+                </p>
+                <button class="translation-btn" onclick="toggleTranslation('trans-ex3-2')">Mở dịch đoạn này 🌟</button>
+                <div class="translation-content" id="trans-ex3-2">
+                    Một phong tục đáng yêu đến từ nước Pháp có hình dáng là một chiếc cúp hai quai được gọi là "coup de marriage". Chiếc cúp được lưu giữ để sử dụng từ thế hệ này sang thế hệ khác, dĩ nhiên, phong tục uống rượu chúc mừng nhau từ lâu đã được thiết lập, nhưng chiếc cúp hai quai lại thêm một điểm nhấn đặc biệt cho đám cưới ngày nay. Cho đến gần đây, những chiếc cúp này rất khó tìm. Uống chung một cúp biểu thị sự "gắn kết đồng lòng".<br>Tại một đám cưới ở Đức, cô dâu và chú rể cầm những ngọn nến được trang trí bằng hoa và ruy băng. Phong tục cổ xưa tốt đẹp này có thể được đưa vào một đám cưới ngày nay, với việc cặp đôi đặt những ngọn nến họ mang đến bệ thờ bên cạnh ngọn nến hợp nhất của họ. Những ngọn nến này sau đó có thể được dùng để thắp sáng ngọn nến hợp nhất vào cuối buổi lễ.<br>Hoa luôn đóng một phần rất quan trọng trong đám cưới ở Ấn Độ. Một truyền thống lâu đời được truyền từ thế hệ này sang thế hệ khác là anh/em trai của chú rể rắc những cánh hoa lên đầu cặp đôi sau lời thề đám cưới và vào cuối buổi lễ.
+                </div>
+
+                <table class="glossary-table">
+                    <thead>
+                        <tr><th>Từ vựng</th><th>Loại từ</th><th>Nghĩa tiếng Việt</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Generation</td><td>(n)</td><td>Thế hệ</td></tr>
+                        <tr><td>Establish</td><td>(v)</td><td>Thiết lập, thành lập</td></tr>
+                        <tr><td>Denote</td><td>(v)</td><td>Biểu thị, chứng tỏ</td></tr>
+                        <tr><td>Togetherness</td><td>(n)</td><td>Sự gắn kết, tình thân mật</td></tr>
+                        <tr><td>Trimmed</td><td>(adj)</td><td>Được tô điểm, cắt tỉa</td></tr>
+                        <tr><td>Ribbon</td><td>(n)</td><td>Ruy băng</td></tr>
+                        <tr><td>Altar</td><td>(n)</td><td>Bàn thờ, bệ thờ</td></tr>
+                        <tr><td>Ceremony</td><td>(n)</td><td>Nghi lễ, buổi lễ</td></tr>
+                        <tr><td>Sprinkle</td><td>(v)</td><td>Rắc, rải</td></tr>
+                        <tr><td>Vow</td><td>(n/v)</td><td>Lời thề, tuyên thệ</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- EXERCISE 4 - PASSAGE 1 -->
+            <div class="passage-section">
+                <div class="passage-title">❺ 📜 Something Old, Something New 📜</div>
+                <p class="passage-text">
+                    Although there are various wedding styles in America, most weddings still follow certain traditions. One of those is an old saying that dates back to 19th century England about what a bride should wear or carry: “Something old, something new, something borrowed, something blue.”<br><br>
+                    A bride wears <em>something old</em> to remind her of her family and the past. Some brides wear their mother’s wedding dress or a piece of her jewelry. <em>Something new</em> means good luck and hope for a happy future with her new husband. Again, this item may be the dress, but often <strong>it</strong> is a pair of new shoes. <em>Something borrowed</em> such as a friend’s handkerchief a married friend’s bridal veil means the bride has friends and family who are willing to help her. <em>Something blue</em> is a symbol of trust and faith between the couple. These days, some brides are creative with this item by painting their fingernails a light blue color or wearing a garter on their leg. Another tradition says that the groom should take the garter after the ceremony and throw it to the single men. The man who catches it will be the next one to get married.
+                </p>
+                <button class="translation-btn" onclick="toggleTranslation('trans-ex4-1')">Mở dịch đoạn này 🌟</button>
+                <div class="translation-content" id="trans-ex4-1">
+                    Mặc dù có nhiều phong cách đám cưới khác nhau ở Mỹ, hầu hết các đám cưới vẫn tuân theo một số truyền thống nhất định. Một trong số đó là một câu nói cổ có từ thế kỷ 19 ở Anh về những gì cô dâu nên mặc hoặc mang theo: "Một cái gì đó cũ, một cái gì đó mới, một cái gì đó mượn, một cái gì đó màu xanh."<br>Cô dâu mặc món đồ gì đó cũ để nhắc nhở cô về gia đình và quá khứ. Một số cô dâu mặc váy cưới của mẹ hoặc một món trang sức của mẹ. Món đồ gì đó mới mang ý nghĩa may mắn và hy vọng vào một tương lai hạnh phúc bên người chồng mới. Món đồ này một lần nữa có thể là chiếc váy, nhưng thường nó là một đôi giày mới. Một món đồ mượn chẳng hạn như chiếc khăn tay của một người bạn hoặc tấm voan che mặt của một người bạn đã kết hôn có nghĩa là cô dâu có bạn bè và gia đình sẵn sàng giúp đỡ mình. Món đồ màu xanh là biểu tượng của sự tin tưởng và chung thủy giữa cặp đôi. Ngày nay, một số cô dâu rất sáng tạo với món đồ này bằng cách sơn móng tay màu xanh nhạt hoặc đeo nịt tất chân trên đùi. Một truyền thống khác nói rằng chú rể nên lấy chiếc nịt tất chân sau buổi lễ và ném nó cho những người đàn ông độc thân. Người đàn ông bắt được nó sẽ là người tiếp theo kết hôn.
+                </div>
+
+                <table class="glossary-table">
+                    <thead>
+                        <tr><th>Từ vựng</th><th>Loại từ</th><th>Nghĩa tiếng Việt</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Various</td><td>(adj)</td><td>Đa dạng, nhiều loại khác nhau</td></tr>
+                        <tr><td>Remind</td><td>(v)</td><td>Nhắc nhở, gợi nhớ</td></tr>
+                        <tr><td>Jewelry</td><td>(n)</td><td>Trang sức</td></tr>
+                        <tr><td>Handkerchief</td><td>(n)</td><td>Khăn tay</td></tr>
+                        <tr><td>Bridal veil</td><td>(n)</td><td>Voan che mặt của cô dâu</td></tr>
+                        <tr><td>Willing</td><td>(adj)</td><td>Sẵn lòng</td></tr>
+                        <tr><td>Trust</td><td>(n/v)</td><td>Sự tin tưởng</td></tr>
+                        <tr><td>Faith</td><td>(n)</td><td>Niềm tin, sự chung thủy</td></tr>
+                        <tr><td>Creative</td><td>(adj)</td><td>Sáng tạo</td></tr>
+                        <tr><td>Garter</td><td>(n)</td><td>Nịt tất chân, vòng đeo đùi</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- EXERCISE 4 - PASSAGE 2 -->
+            <div class="passage-section">
+                <div class="passage-title">❻ 🎁 Gift-Giving Customs in Viet Nam 🎁</div>
+                <p class="passage-text">
+                    Gift-giving is important in Viet Nam because of the significance of interpersonal relationships in Vietnamese culture.<br><br>
+                    First and foremost, do not encourage corruption. There is a clear cut between gift-giving and bribery. Nevertheless, it is common in Viet Nam for exchanging small gifts on certain occasions such as anniversaries, Tet holidays... to express respect, love, appreciation, or gratitude.<br><br>
+                    Gift-giving customs depend on the context. If it is a private gift for one Vietnamese partner you should give the gift at a private occasion. If you have a gift for the whole office or company, you should give it after the business meeting with the whole office employee.<br><br>
+                    Do not wrap a gift in black paper because this color is unlucky and associated with funerals in Viet Nam. Gifts that symbolize cutting such as scissors, knives, and other sharp objects should be avoided because they mean the cutting of the relationship.<br><br>
+                    Vietnamese may or may not open these gifts when they are received; leave the option to them. You will also receive gifts and should defer to your host as to whether you should open them when receiving or not. Regardless of when it is opened or what it is, profuse thanks are always appropriate.
+                </p>
+                <button class="translation-btn" onclick="toggleTranslation('trans-ex4-2')">Mở dịch đoạn này 🌟</button>
+                <div class="translation-content" id="trans-ex4-2">
+                    Tặng quà là điều quan trọng ở Việt Nam vì tầm ý nghĩa của các mối quan hệ cá nhân trong văn hóa người Việt.<br>Trước hết và quan trọng nhất, không khuyến khích tham nhũng. Có một ranh giới rõ ràng giữa tặng quà và hối lộ. Tuy nhiên, việc trao đổi những món quà nhỏ vào những dịp nhất định như lễ kỷ niệm, ngày Tết... để thể hiện sự kính trọng, yêu thương, trân trọng hay biết ơn là điều rất phổ biến ở Việt Nam.<br>Phong tục tặng quà tùy thuộc vào ngữ cảnh. Nếu đó là món quà riêng tư cho một đối tác Việt Nam, bạn nên tặng quà vào một dịp riêng tư. Nếu bạn có quà cho cả văn phòng hoặc công ty, bạn nên tặng quà sau cuộc họp kinh doanh với toàn thể nhân viên văn phòng.<br>Không gói quà bằng giấy màu đen vì màu này là không may mắn và gắn liền với đám tang ở Việt Nam. Nên tránh những món quà biểu thị sự chia cắt như kéo, dao và các vật sắc nhọn khác vì chúng mang ý nghĩa cắt đứt mối quan hệ.<br>Người Việt Nam có thể mở hoặc không mở những món quà này khi nhận; hãy để quyền lựa chọn cho họ. Bạn cũng sẽ nhận được quà và nên nghe theo gia chủ về việc bạn có nên mở chúng khi nhận hay không. Bất kể nó được mở khi nào hay đó là gì, những lời cảm ơn chân thành nồng nhiệt luôn luôn phù hợp.
+                </div>
+
+                <table class="glossary-table">
+                    <thead>
+                        <tr><th>Từ vựng</th><th>Loại từ</th><th>Nghĩa tiếng Việt</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Significance</td><td>(n)</td><td>Tầm quan trọng, ý nghĩa lớn</td></tr>
+                        <tr><td>Interpersonal</td><td>(adj)</td><td>Giữa các cá nhân với nhau</td></tr>
+                        <tr><td>Corruption</td><td>(n)</td><td>Sự tham nhũng</td></tr>
+                        <tr><td>Bribery</td><td>(n)</td><td>Sự hối lộ</td></tr>
+                        <tr><td>Appreciation</td><td>(n)</td><td>Sự trân trọng, đánh giá cao</td></tr>
+                        <tr><td>Gratitude</td><td>(n)</td><td>Lòng biết ơn</td></tr>
+                        <tr><td>Associated with</td><td>(v.phr)</td><td>Gắn liền với, liên quan tới</td></tr>
+                        <tr><td>Funeral</td><td>(n)</td><td>Đám tang</td></tr>
+                        <tr><td>Defer to</td><td>(v.phr)</td><td>Làm theo, tôn trọng theo ý ai</td></tr>
+                        <tr><td>Profuse</td><td>(adj)</td><td>Dồi dào, nhiều, nồng nhiệt</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- EXERCISE 5 - PASSAGE 1 & 2 TEXT INTEGRITY -->
+            <div class="passage-section">
+                <div class="passage-title">❼ 📑 Context Completion Reading 📑</div>
+                <p class="passage-text">
+                    <strong>Paragraph 1 (The Tet Holiday):</strong> The Tet holiday is celebrated on the first day of the Lunar New Year in Viet Nam. Several weeks before the New Year, the Vietnamese clean their houses and paint the walls. <strong>(1) ______</strong> One or two days before the festival, people make Banh Chung, which is a traditional cake, and kinds of jam. On New Year’s Eve, <strong>(2) ______</strong> Every member of the family should be present during the dinner in which many different kinds of dishes are served. On New Year morning, the young members of the family pay their respects to the elders. <strong>(3) ______</strong> Then people go to visit their neighbours, friends and relatives. <strong>(4) ______</strong>
+                </p>
+                <hr style="margin:15px 0; border: 1px dashed #ccc;">
+                <p class="passage-text">
+                    <strong>Paragraph 2 (Birthday Tree Tradition):</strong> In some parts of Europe, they have a birthday tree planted when the new child is born. <strong>(1) ______</strong> The tradition of birthday parties began in Europe centuries ago. <strong>(2) ______</strong> To protect the birthday person from harm, friends and family would gather around them and bring good thoughts and wishes. <strong>(3) ______</strong> At first, only kings and royalty were recognized as important enough to have a birthday celebration. <strong>(4) ______</strong>
+                </p>
+            </div>
+
+        </div>
+
+        <!-- RIGHT PANEL: Exercises & Questions with detailed explanations -->
+        <div class="panel" id="right-panel">
+            
+            <!-- EXERCISE 2 QUESTIONS -->
+            <h2 style="color:#8854C0; margin-bottom:20px;">Exercise 2: Multiple Choice Cloze</h2>
+            
+            <!-- Q1 -->
+            <div class="exercise-block" id="ex2-q1" data-correct="A">
+                <div class="question-title"><strong>Question 1 (❶-1):</strong> It’s a great ______ of history and beautiful customs!</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. mix</button>
+                    <button class="option-btn" data-opt="B">B. table</button>
+                    <button class="option-btn" data-opt="C">C. car</button>
+                    <button class="option-btn" data-opt="D">D. tree</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>1. Phân tích từ vựng:</strong><br>A. mix (n): sự pha trộn, kết hợp.<br>B. table (n): cái bàn.<br>C. car (n): xe ô tô.<br>D. tree (n): cái cây.</p>
+                    <p><strong>2. Dịch nghĩa:</strong> "Đó là một sự kết hợp tuyệt vời giữa lịch sử và những phong tục tốt đẹp!"</p>
+                    <p><strong>3. Tại sao chọn A?</strong> Căn cứ vào ngữ cảnh nói về văn hóa "culture", nó là sự giao thoa hòa hợp của lịch sử và phong tục nên dùng danh từ "mix". Các phương án còn lại hoàn toàn không hợp nghĩa logic.</p>
+                </div>
+            </div>
+
+            <!-- Q2 -->
+            <div class="exercise-block" id="ex2-q2" data-correct="D">
+                <div class="question-title"><strong>Question 2 (❶-2):</strong> It’s a time ______ visiting our grandparents...</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. under</button>
+                    <button class="option-btn" data-opt="B">B. without</button>
+                    <button class="option-btn" data-opt="C">C. along</button>
+                    <button class="option-btn" data-opt="D">D. for</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>1. Cấu trúc ngữ pháp:</strong> Cấu trúc <em>"It's a time for + V-ing/Noun"</em> nghĩa là "Đây là thời gian dành cho việc gì...".</p>
+                    <p><strong>2. Dịch nghĩa:</strong> "Đó là khoảng thời gian dành cho việc đi thăm ông bà và chúc Tết mọi người."</p>
+                    <p><strong>3. Tại sao chọn D?</strong> Giới từ "for" chỉ mục đích hoặc đối tượng hướng tới của thời gian. Các giới từ khác như under (dưới), without (không có), along (dọc theo) đều không phù hợp ngữ pháp và ngữ nghĩa.</p>
+                </div>
+            </div>
+
+            <!-- Q3 -->
+            <div class="exercise-block" id="ex2-q3" data-correct="D">
+                <div class="question-title"><strong>Question 3 (❶-3):</strong> ...and ______ people.</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. respect</button>
+                    <button class="option-btn" data-opt="B">B. respected</button>
+                    <button class="option-btn" data-opt="C">C. respectful</button>
+                    <button class="option-btn" data-opt="D">D. respecting</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>1. Cấu trúc song hành (Parallel Structure):</strong> Liên từ "and" nối các từ có cùng cấu trúc ngữ pháp. Phía trước ta có "visiting" (V-ing), suy ra sau "and" cũng phải là một động từ thêm đuôi -ing.</p>
+                    <p><strong>2. Dịch nghĩa:</strong> "...thời gian cho việc thăm ông bà và kính trọng/thể hiện sự tôn trọng mọi người."</p>
+                    <p><strong>3. Tại sao chọn D?</strong> "respecting" dạng V-ing đáp ứng đúng quy tắc song hành với "visiting" đứng trước đó.</p>
+                </div>
+            </div>
+
+            <!-- Q4 -->
+            <div class="exercise-block" id="ex2-q4" data-correct="A">
+                <div class="question-title"><strong>Question 4 (❶-4):</strong> Our traditional ao dai dress is also very ______ symbol of our country.</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. a</button>
+                    <button class="option-btn" data-opt="B">B. an</button>
+                    <button class="option-btn" data-opt="C">C. the</button>
+                    <button class="option-btn" data-opt="D">D. X</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>1. Kiến thức mạo từ:</strong> Cụm danh từ số ít đếm được nhắc đến lần đầu mang tính khái quát chung: "a + phụ âm". Ở đây từ "very" bắt đầu bằng phụ âm /v/.</p>
+                    <p><strong>2. Dịch nghĩa:</strong> "Trang phục áo dài truyền thống của chúng ta cũng là một biểu tượng rất đặc trưng của đất nước."</p>
+                    <p><strong>3. Tại sao chọn A?</strong> Danh từ "symbol" là số ít đếm được, chưa xác định cụ thể trong văn cảnh này nên dùng mạo từ bất định "a".</p>
+                </div>
+            </div>
+
+            <!-- Q5 -->
+            <div class="exercise-block" id="ex2-q5" data-correct="A">
+                <div class="question-title"><strong>Question 1 (❷-1):</strong> It is ______ very famous place in the Mekong Delta.</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. a</button>
+                    <button class="option-btn" data-opt="B">B. an</button>
+                    <button class="option-btn" data-opt="C">C. the</button>
+                    <button class="option-btn" data-opt="D">D. X</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Ý nghĩa ngữ pháp:</strong> Tương tự câu trên, "place" là danh từ đếm được số ít, được bổ nghĩa bởi trạng từ + tính từ "very famous" (bắt đầu bằng phụ âm /v/). Chúng ta dùng "a" để giới thiệu một địa điểm mang tính định danh lần đầu.</p>
+                </div>
+            </div>
+
+            <!-- Q6 -->
+            <div class="exercise-block" id="ex2-q6" data-correct="B">
+                <div class="question-title"><strong>Question 2 (❷-2):</strong> ...the village becomes very ______.</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. colour</button>
+                    <button class="option-btn" data-opt="B">B. colourful</button>
+                    <button class="option-btn" data-opt="C">C. colourfully</button>
+                    <button class="option-btn" data-opt="D">D. coloured</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>1. Từ loại sau Động từ nối (Linking Verb):</strong> Động từ "become" yêu cầu đi sau nó là một Tính từ (Adjective) để miêu tả tính chất của chủ ngữ.</p>
+                    <p><strong>2. Phân tích từ loại:</strong> A. colour (n/v); B. colourful (adj - rực rỡ); C. colourfully (adv); D. coloured (adj/V2 - được nhuộm màu).</p>
+                    <p><strong>3. Tại sao chọn B?</strong> Ngôi làng trở nên "rực rỡ sắc màu" nhờ hàng ngàn đóa hoa nở rộ, tính từ đuôi -ful là thích hợp nhất về mặt ngữ nghĩa và ngữ pháp.</p>
+                </div>
+            </div>
+
+            <!-- Q7 -->
+            <div class="exercise-block" id="ex2-q7" data-correct="C">
+                <div class="question-title"><strong>Question 3 (❷-3):</strong> Farmers grow the flowers on high wooden ______ because of the water below.</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. cars</button>
+                    <button class="option-btn" data-opt="B">B. bridges</button>
+                    <button class="option-btn" data-opt="C">C. beds</button>
+                    <button class="option-btn" data-opt="D">D. desks</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Từ vựng chuyên ngành / Thực tế vùng miền:</strong> Ở làng hoa Sa Đéc, do mực nước bên dưới, người dân thường thiết kế những chiếc "giàn/luống cao" bằng tre gỗ. Trong tiếng Anh, luống trồng hoa hay giàn đỡ trồng trọt tầm thấp được gọi là "flower beds" hoặc "wooden beds". Các phương án car (ô tô), bridge (cây cầu lớn), desk (bàn học) hoàn toàn phi lý.</p>
+                </div>
+            </div>
+
+            <!-- Q8 -->
+            <div class="exercise-block" id="ex2-q8" data-correct="A">
+                <div class="question-title"><strong>Question 4 (❷-4):</strong> You can enjoy ______ the unique atmosphere...</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. seeing</button>
+                    <button class="option-btn" data-opt="B">B. to see</button>
+                    <button class="option-btn" data-opt="C">C. see</button>
+                    <button class="option-btn" data-opt="D">D. sees</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Cấu trúc động từ:</strong> Động từ "enjoy" bắt buộc đi kèm với một danh động từ phía sau: <strong>Enjoy + V-ing</strong> (Thích thú/Tận hưởng làm việc gì).</p>
+                    <p>Do đó, "seeing" là đáp án chính xác duy nhất về mặt ngữ pháp.</p>
+                </div>
+            </div>
+
+
+            <!-- EXERCISE 3 QUESTIONS -->
+            <h2 style="color:#8854C0; margin-top:30px; margin-bottom:20px;">Exercise 3: Word Choice Cloze</h2>
+
+            <!-- Ex3 Q1 -->
+            <div class="exercise-block" id="ex3-q1" data-correct="A">
+                <div class="question-title"><strong>Question 1 (❸-1):</strong> To ______ Tet, Vietnamese people make many tasty...</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. celebrate</button>
+                    <button class="option-btn" data-opt="B">B. join</button>
+                    <button class="option-btn" data-opt="C">C. take part in</button>
+                    <button class="option-btn" data-opt="D">D. participate</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Collocation (Cụm từ cố định):</strong> Để nói về việc ăn mừng, đón một ngày lễ lớn, chúng ta dùng động từ <em>"celebrate + festival/holiday"</em>. Các cụm từ còn lại như join, take part in, participate đều mang nghĩa là tham gia vào một hoạt động/cuộc thi cụ thể (và thường yêu cầu giới từ hoặc cấu trúc khác nhau, ví dụ participate IN).</p>
+                </div>
+            </div>
+
+            <!-- Ex3 Q2 -->
+            <div class="exercise-block" id="ex3-q2" data-correct="B">
+                <div class="question-title"><strong>Question 2 (❸-2):</strong> ...make many tasty ______ foods.</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. delicious</button>
+                    <button class="option-btn" data-opt="B">B. traditional</button>
+                    <button class="option-btn" data-opt="C">C. spicy</button>
+                    <button class="option-btn" data-opt="D">D. tradition</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Ngữ nghĩa và ngữ pháp:</strong> Trước danh từ "foods" cần một tính từ bổ nghĩa. Vì phía trước đã có tính từ "tasty" (ngon) nên nếu dùng thêm "delicious" (cũng là ngon) sẽ bị lặp nghĩa thừa thãi. Các món như bánh chưng, giò chả là đồ ăn "truyền thống" -> "traditional". Loại D vì "tradition" là danh từ.</p>
+                </div>
+            </div>
+
+            <!-- Ex3 Q3 -->
+            <div class="exercise-block" id="ex3-q3" data-correct="D">
+                <div class="question-title"><strong>Question 3 (❸-3):</strong> ...wrapped in green leaves; ______, this cake needs a lot of preparation.</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. because</button>
+                    <button class="option-btn" data-opt="B">B. while</button>
+                    <button class="option-btn" data-opt="C">C. therefore</button>
+                    <button class="option-btn" data-opt="D">D. however</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Trạng từ liên kết (Conjunctive Adverbs):</strong> Vị trí đứng sau dấu chấm phẩy và trước dấu phẩy "; ______, " thường dành cho "however" (tuy nhiên) hoặc "therefore" (do đó). Xét ý nghĩa: bánh ngon, nguyên liệu quen thuộc NHƯNG LẠI cần chuẩn bị cực kì công phu phức tạp -> biểu thị mối quan hệ tương phản, chọn "however".</p>
+                </div>
+            </div>
+
+            <!-- Ex3 Q4 -->
+            <div class="exercise-block" id="ex3-q4" data-correct="A">
+                <div class="question-title"><strong>Question 4 (❸-4):</strong> Because sausages are difficult ______, people often buy them...</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. to make</button>
+                    <button class="option-btn" data-opt="B">B. making</button>
+                    <button class="option-btn" data-opt="C">C. make</button>
+                    <button class="option-btn" data-opt="D">D. makes</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Cấu trúc tính từ:</strong> Cấu trúc <strong>S + be + Adj + to-V</strong> (Làm cái gì đó như thế nào). Khẳng định giò chả rất khó để tự làm -> "difficult to make".</p>
+                </div>
+            </div>
+
+            <!-- Ex3 Q5 -->
+            <div class="exercise-block" id="ex3-q5" data-correct="D">
+                <div class="question-title"><strong>Question 5 (❸-5):</strong> ...and must be ______ immediately after they are cooked...</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. touched</button>
+                    <button class="option-btn" data-opt="B">B. smelled</button>
+                    <button class="option-btn" data-opt="C">C. looked</button>
+                    <button class="option-btn" data-opt="D">D. served</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Ngữ cảnh nhà hàng/ẩm thực:</strong> Thức ăn sau khi nấu xong phải được "phục vụ / dọn lên bàn ăn" ngay lập tức để đảm bảo độ nóng ngon. Dùng dạng bị động "must be served". Các từ còn lại: touched (bị chạm), smelled (bị ngửi), looked (bị nhìn) không phù hợp phong cách ẩm thực.</p>
+                </div>
+            </div>
+
+            <!-- Ex3 Q6 -->
+            <div class="exercise-block" id="ex3-q6" data-correct="C">
+                <div class="question-title"><strong>Question 6 (❸-6):</strong> ...so they are often made ______ home.</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. to</button>
+                    <button class="option-btn" data-opt="B">B. for</button>
+                    <button class="option-btn" data-opt="C">C. at</button>
+                    <button class="option-btn" data-opt="D">D. in</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Cụm giới từ nơi chốn:</strong> Cụm từ siêu quen thuộc với học sinh tiểu học: <strong>"at home"</strong> nghĩa là ở nhà. Do đó "made at home" là làm tại nhà.</p>
+                </div>
+            </div>
+
+            <!-- Ex3 Q7 (❹-1) -->
+            <div class="exercise-block" id="ex3-q7" data-correct="A">
+                <div class="question-title"><strong>Question 1 (❹-1):</strong> saved to be used from one ______ to another</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. generation</button>
+                    <button class="option-btn" data-opt="B">B. ancestor</button>
+                    <button class="option-btn" data-opt="C">C. ceremony</button>
+                    <button class="option-btn" data-opt="D">D. worshiper</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Cụm từ thông dụng (Idiom/Phrase):</strong> Cụm từ <em>"from one generation to another"</em> nghĩa là từ thế hệ này sang thế hệ khác (truyền đời). Phù hợp hoàn hảo với ngữ cảnh lưu giữ chiếc cúp quý báu qua các đời trong gia đình Pháp.</p>
+                </div>
+            </div>
+
+            <!-- Ex3 Q8 (❹-2) -->
+            <div class="exercise-block" id="ex3-q8" data-correct="B">
+                <div class="question-title"><strong>Question 2 (❹-2):</strong> of course, ______ custom has long been established</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. some</button>
+                    <button class="option-btn" data-opt="B">B. the</button>
+                    <button class="option-btn" data-opt="C">C. a</button>
+                    <button class="option-btn" data-opt="D">D. an</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Xác định mạo từ:</strong> Phong tục "uống rượu mừng chúc tụng nhau" đã được đề cập gián tiếp hoặc là phong tục cụ thể được làm rõ bằng mệnh đề phía sau "of drinking a toast...", đây là danh từ đã xác định rõ ràng bản chất nên dùng mạo từ "the".</p>
+                </div>
+            </div>
+
+            <!-- Ex3 Q9 (❹-3) -->
+            <div class="exercise-block" id="ex3-q9" data-correct="B">
+                <div class="question-title"><strong>Question 3 (❹-3):</strong> Until recently, these cups ______ very difficult to find.</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. have been</button>
+                    <button class="option-btn" data-opt="B">B. were</button>
+                    <button class="option-btn" data-opt="C">C. had been</button>
+                    <button class="option-btn" data-opt="D">D. are</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Thì của động từ:</strong> Cụm từ "Until recently" (Cho tới gần đây) diễn tả một trạng thái đã xảy ra và kéo dài trong quá khứ nhưng nay đã thay đổi. Kết hợp với ngữ cảnh câu chuyện kể về những truyền thống xa xưa, hành động chia ở thì Quá khứ đơn "were" là chuẩn xác để mô tả thực trạng thời đó.</p>
+                </div>
+            </div>
+
+            <!-- Ex3 Q10 (❹-4) -->
+            <div class="exercise-block" id="ex3-q10" data-correct="C">
+                <div class="question-title"><strong>Question 4 (❹-4):</strong> This beautiful old ______ could be included in a wedding of today...</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. reunion</button>
+                    <button class="option-btn" data-opt="B">B. festival</button>
+                    <button class="option-btn" data-opt="C">C. tradition</button>
+                    <button class="option-btn" data-opt="D">D. worship</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Sự nhất quán về từ vựng (Cohesion):</strong> Bài đọc có tiêu đề "Wedding Traditions around the World", xuyên suốt bài nói về phong tục tập quán cưới xin, vì vậy danh từ tương thích nhất là "tradition" (truyền thống).</p>
+                </div>
+            </div>
+
+            <!-- Ex3 Q11 (❹-5) -->
+            <div class="exercise-block" id="ex3-q11" data-correct="A">
+                <div class="question-title"><strong>Question 5 (❹-5):</strong> These candles could then be used ______ the unity candle...</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. to light</button>
+                    <button class="option-btn" data-opt="B">B. lighting</button>
+                    <button class="option-btn" data-opt="C">C. light</button>
+                    <button class="option-btn" data-opt="D">D. lighted</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Cấu trúc chỉ mục đích:</strong> <strong>be used + to-V</strong> nghĩa là "được sử dụng ĐỂ làm việc gì". Ở đây những ngọn nến được dùng ĐỂ thắp sáng ngọn nến hợp nhất, do đó ta chọn "to light". (Lưu ý tránh nhầm với cấu trúc chỉ thói quen <em>be used to + V-ing</em> nhé!).</p>
+                </div>
+            </div>
+
+            <!-- Ex3 Q12 (❹-6) -->
+            <div class="exercise-block" id="ex3-q12" data-correct="B">
+                <div class="question-title"><strong>Question 6 (❹-6):</strong> Flowers have always played a very ______ part in Indian weddings.</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. import</button>
+                    <button class="option-btn" data-opt="B">B. important</button>
+                    <button class="option-btn" data-opt="C">C. importance</button>
+                    <button class="option-btn" data-opt="D">D. importantly</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Vị trí từ loại:</strong> Đứng trước danh từ "part" và sau trạng từ chỉ mức độ "very" bắt buộc phải là một Tính từ (Adjective).<br>Trong 4 đáp án, chỉ có "important" là tính từ mang nghĩa "quan trọng". Cụm từ <em>play an important part/role in</em> là một collocation kinh điển!</p>
+                </div>
+            </div>
+
+
+            <!-- EXERCISE 4 QUESTIONS -->
+            <h2 style="color:#8854C0; margin-top:30px; margin-bottom:20px;">Exercise 4: Reading Comprehension</h2>
+
+            <!-- Ex4.1 Q1 -->
+            <div class="exercise-block" id="ex4-1-q1" data-correct="B">
+                <div class="question-title"><strong>Question 1 (❺-1):</strong> Which of the following is a good title for the text?</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. Various types of weddings.</button>
+                    <button class="option-btn" data-opt="B">B. A wedding tradition and its meaning.</button>
+                    <button class="option-btn" data-opt="C">C. What should be worn on your wedding day.</button>
+                    <button class="option-btn" data-opt="D">D. How to plan a traditional wedding.</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Dẫn chứng & Phân tích:</strong> Toàn bộ bài đọc tập trung giải thích câu nói dân gian về trang phục cô dâu mang theo: “Something old, something new, something borrowed, something blue” và phân tích chi tiết ý nghĩa tâm linh/may mắn của từng món đồ này. Vì vậy, "A wedding tradition and its meaning" (Một truyền thống đám cưới và ý nghĩa của nó) là tiêu đề bao quát và hoàn hảo nhất.</p>
+                </div>
+            </div>
+
+            <!-- Ex4.1 Q2 -->
+            <div class="exercise-block" id="ex4-1-q2" data-correct="C">
+                <div class="question-title"><strong>Question 2 (❺-2):</strong> To remind her of the past, the bride might ______.</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. wear a pair of new shoes.</button>
+                    <button class="option-btn" data-opt="B">B. carry a friend’s handkerchief.</button>
+                    <button class="option-btn" data-opt="C">C. wear her mother’s wedding dress.</button>
+                    <button class="option-btn" data-opt="D">D. paint her fingernails a light blue color.</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Dẫn chứng trong bài:</strong> Đoạn 2 dòng 1-2 có ghi rõ: <em>"A bride wears something old to remind her of her family and the past. Some brides wear their mother’s wedding dress..."</em> (Cô dâu mặc món đồ cũ để gợi nhớ về quá khứ... Một số cô dâu mặc váy cưới của mẹ). Do đó đáp án C hoàn toàn chính xác.</p>
+                </div>
+            </div>
+
+            <!-- Ex4.1 Q3 -->
+            <div class="exercise-block" id="ex4-1-q3" data-correct="D">
+                <div class="question-title"><strong>Question 3 (❺-3):</strong> For good luck and hope for a good future with her partner, the bride might wear ______.</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. a piece of new jewelry or a new dress.</button>
+                    <button class="option-btn" data-opt="B">B. a bridal veil and a new dress</button>
+                    <button class="option-btn" data-opt="C">C. a new dress and a pair of new shoes</button>
+                    <button class="option-btn" data-opt="D">D. a pair of new shoes or a new dress</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Dẫn chứng trong bài:</strong> Đoạn 2 dòng 2-4 có ghi: <em>"Something new means good luck and hope for a happy future... Again, this item may be the dress, but often it is a pair of new shoes."</em> (Món đồ mới nghĩa là may mắn và hy vọng tương lai... Món đồ này có thể là chiếc váy, hoặc thường là một đôi giày mới). Như vậy món đồ mới có thể rơi vào 1 trong 2 thứ: váy mới hoặc giày mới. Chọn D.</p>
+                </div>
+            </div>
+
+            <!-- Ex4.1 Q4 -->
+            <div class="exercise-block" id="ex4-1-q4" data-correct="C">
+                <div class="question-title"><strong>Question 4 (❺-4):</strong> The word “it” refers to ______.</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. a pair of shoes</button>
+                    <button class="option-btn" data-opt="B">B. luck</button>
+                    <button class="option-btn" data-opt="C">C. item</button>
+                    <button class="option-btn" data-opt="D">D. future</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Phân tích đại từ thay thế (Anaphoric reference):</strong> Đọc câu trước đó: <em>"Again, this <strong>item</strong> may be the dress, but often <strong>it</strong> is a pair of new shoes."</em> Đại từ "it" đóng vai trò làm chủ ngữ thay thế cho danh từ trung tâm đứng ngay trước đó là "this item". Chọn C.</p>
+                </div>
+            </div>
+
+            <!-- Ex4.1 Q5 -->
+            <div class="exercise-block" id="ex4-1-q5" data-correct="B">
+                <div class="question-title"><strong>Question 5 (❺-5):</strong> Why do some brides wear a blue garter on their leg?</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. Because too many brides paint their fingernails a light blue color.</button>
+                    <button class="option-btn" data-opt="B">B. Because it is a symbol of trust and faith between the bride and the groom.</button>
+                    <button class="option-btn" data-opt="C">C. To show how the couple can be lucky in their marriage.</button>
+                    <button class="option-btn" data-opt="D">D. To show how popular something blue is in a wedding.</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Dẫn chứng trong bài:</strong> Bài viết nêu: <em>"Something blue is a symbol of trust and faith between the couple. These days, some brides are creative with this item by... wearing a garter on their leg."</em> Việc đeo nịt đùi màu xanh chỉ là hình thức sáng tạo của món đồ mang sắc xanh "something blue", mà ý nghĩa cốt lõi của sắc xanh này là biểu tượng của lòng tin và sự chung thủy (trust and faith). Chọn B.</p>
+                </div>
+            </div>
+
+            <!-- Ex4.2 Q1 -->
+            <div class="exercise-block" id="ex4-2-q1" data-correct="D">
+                <div class="question-title"><strong>Question 1 (❻-1):</strong> According to the passage, why is gift-giving important in Viet Nam?</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. Because it helps to establish a friendship.</button>
+                    <button class="option-btn" data-opt="B">B. Because it's common in Vietnamese culture.</button>
+                    <button class="option-btn" data-opt="C">C. Because it's the best way to build up a stable relationship.</button>
+                    <button class="option-btn" data-opt="D">D. Because personal relationships play a vital role in Vietnamese culture.</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Dẫn chứng trong bài:</strong> Câu đầu tiên của bài đọc khẳng định: <em>"Gift-giving is important in Viet Nam because of the significance of interpersonal relationships in Vietnamese culture."</em> (Tặng quà quan trọng ở VN vì tầm quan trọng của các mối quan hệ giữa người với người). Cụm "personal relationships play a vital role" chính là cách viết lại (paraphrase) hoàn hảo của câu gốc. Chọn D.</p>
+                </div>
+            </div>
+
+            <!-- Ex4.2 Q2 -->
+            <div class="exercise-block" id="ex4-2-q2" data-correct="B">
+                <div class="question-title"><strong>Question 2 (❻-2):</strong> Which of the following should not be a reason for gift-giving?</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. To show appreciation</button>
+                    <button class="option-btn" data-opt="B">B. To bribe somebody</button>
+                    <button class="option-btn" data-opt="C">C. To express gratitude</button>
+                    <button class="option-btn" data-opt="D">D. To show affection</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Dẫn chứng trong bài:</strong> Đoạn 2 có câu: <em>"First and foremost, do not encourage corruption. There is a clear cut between gift-giving and bribery."</em> (Trước hết, không khuyến khích tham nhũng. Có sự phân định rõ ràng giữa tặng quà và hối lộ). Tặng quà với mục đích hối lộ (bribe) là hành vi xấu cần bài trừ, không phải lý do chính đáng cho nét đẹp văn hóa này. Chọn B.</p>
+                </div>
+            </div>
+
+            <!-- Ex4.2 Q3 -->
+            <div class="exercise-block" id="ex4-2-q3" data-correct="C">
+                <div class="question-title"><strong>Question 3 (❻-3):</strong> When giving a gift, you should ______.</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. wrap it in black or white paper</button>
+                    <button class="option-btn" data-opt="B">B. give it in the business meeting</button>
+                    <button class="option-btn" data-opt="C">C. never give sharp objects, such as knives or scissors</button>
+                    <button class="option-btn" data-opt="D">D. avoid giving it on a private occasion</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Dẫn chứng trong bài:</strong> Đoạn 4 nêu rõ: <em>"Gifts that symbolize cutting such as scissors, knives, and other sharp objects should be avoided because they mean the cutting of the relationship."</em> (Những món quà biểu thị sự chia cắt như kéo, dao nên tránh). Do đó, bạn không bao giờ nên tặng các vật sắc nhọn. Chọn C.</p>
+                </div>
+            </div>
+
+            <!-- Ex4.2 Q4 -->
+            <div class="exercise-block" id="ex4-2-q4" data-correct="A">
+                <div class="question-title"><strong>Question 4 (❻-4):</strong> When receiving a gift, you should ______.</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. always say "thank you"</button>
+                    <button class="option-btn" data-opt="B">B. try to find what is it</button>
+                    <button class="option-btn" data-opt="C">C. open it in front of the giver</button>
+                    <button class="option-btn" data-opt="D">D. ask your host to open it</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Dẫn chứng trong bài:</strong> Câu cuối bài viết: <em>"Regardless of when it is opened or what it is, profuse thanks are always appropriate."</em> (Bất kể món quà được mở khi nào hay nó là gì, những lời cảm ơn nồng nhiệt luôn luôn là phù hợp/nên làm). Do đó hành động luôn nói lời cảm ơn "thank you" là chuẩn chỉnh. Chọn A.</p>
+                </div>
+            </div>
+
+            <!-- Ex4.2 Q5 -->
+            <div class="exercise-block" id="ex4-2-q5" data-correct="D">
+                <div class="question-title"><strong>Question 5 (❻-5):</strong> Which of the following is NOT true about gift-giving customs in Viet Nam?</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. Gift-giving is a good way of strengthening relationships.</button>
+                    <button class="option-btn" data-opt="B">B. Gifts for your partners should be given at private occasions.</button>
+                    <button class="option-btn" data-opt="C">C. You should avoid giving anything sharp.</button>
+                    <button class="option-btn" data-opt="D">D. It is considered rude not to open the gift in front of the giver.</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Tìm câu SAI so với văn bản:</strong> Đoạn cuối bài viết chỉ rõ: <em>"Vietnamese may or may not open these gifts when they are received; leave the option to them."</em> (Người Việt có thể mở hoặc không mở quà ngay khi nhận, hãy để họ tự chọn). Đoán trước hoặc ép buộc mở trước mặt không phải quy tắc bắt buộc, vì thế câu D nói "coi là thô lỗ nếu không mở trước mặt người tặng" là hoàn toàn Sai sự thật. Chọn D.</p>
+                </div>
+            </div>
+
+
+            <!-- EXERCISE 5 QUESTIONS -->
+            <h2 style="color:#8854C0; margin-top:30px; margin-bottom:20px;">Exercise 5: Context Phrase Insertion</h2>
+
+            <!-- Ex5.1 Blank 1 -->
+            <div class="exercise-block" id="ex5-1-q1" data-correct="A">
+                <div class="question-title"><strong>Question 1 (❼-Paragraph 1-Blank 1):</strong> Several weeks before the New Year, the Vietnamese clean their houses and paint the walls. (1) ______ One or two days before the festival...</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. They often buy new things to decorate their homes</button>
+                    <button class="option-btn" data-opt="B">B. They also like to visit their grandparents and relatives</button>
+                    <button class="option-btn" data-opt="C">C. And the children receive lucky money wrapped in red tiny envelopes</button>
+                    <button class="option-btn" data-opt="D">D. the whole family gets together for a reunion dinner</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Tính mạch lạc (Coherence):</strong> Câu trước đang kể về việc dọn dẹp nhà cửa và sơn tường ("clean their houses and paint the walls"). Hành động logic đi liền sau đó để sửa sang nhà cửa đón Tết chính là mua đồ mới về trang hoàng "buy new things to decorate their homes". Chọn A.</p>
+                </div>
+            </div>
+
+            <!-- Ex5.1 Blank 2 -->
+            <div class="exercise-block" id="ex5-1-q2" data-correct="D">
+                <div class="question-title"><strong>Question 2 (❼-Paragraph 1-Blank 2):</strong> On New Year’s Eve, (2) ______ Every member of the family should be present during the dinner...</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. They often buy new things to decorate their homes</button>
+                    <button class="option-btn" data-opt="B">B. They also like to visit their grandparents and relatives</button>
+                    <button class="option-btn" data-opt="C">C. And the children receive lucky money wrapped in red tiny envelopes</button>
+                    <button class="option-btn" data-opt="D">D. the whole family gets together for a reunion dinner</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Từ khóa chỉ dẫn (Clue words):</strong> Câu tiếp theo ngay sau khoảng trống có nhắc tới "the dinner" (bữa tối) và "Every member of the family should be present" (mọi thành viên đều phải có mặt). Điều này bổ nghĩa giải thích trực tiếp cho cụm "reunion dinner" (bữa cơm tất niên đoàn tụ gia đình). Chọn D.</p>
+                </div>
+            </div>
+
+            <!-- Ex5.1 Blank 3 -->
+            <div class="exercise-block" id="ex5-1-q3" data-correct="C">
+                <div class="question-title"><strong>Question 3 (❼-Paragraph 1-Blank 3):</strong> On New Year morning, the young members pay respects to the elders. (3) ______ Then people go to visit...</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. They often buy new things to decorate their homes</button>
+                    <button class="option-btn" data-opt="B">B. They also like to visit their grandparents and relatives</button>
+                    <button class="option-btn" data-opt="C">C. And the children receive lucky money wrapped in red tiny envelopes</button>
+                    <button class="option-btn" data-opt="D">D. the whole family gets together for a reunion dinner</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Logic văn hóa Tết:</strong> Sáng mùng 1, người trẻ chúc Tết người già (pay respects to the elders), theo tục lệ sau khi chúc Tết thì trẻ em sẽ được nhận tiền lì xì từ người lớn -> câu C "And the children receive lucky money..." khớp hoàn hảo về trình tự phong tục. Chọn C.</p>
+                </div>
+            </div>
+
+            <!-- Ex5.1 Blank 4 -->
+            <div class="exercise-block" id="ex5-1-q4" data-correct="B">
+                <div class="question-title"><strong>Question 4 (❼-Paragraph 1-Blank 4):</strong> Then people go to visit their neighbours, friends and relatives. (4) ______</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. They often buy new things to decorate their homes</button>
+                    <button class="option-btn" data-opt="B">B. They also like to visit their grandparents and relatives</button>
+                    <button class="option-btn" data-opt="C">C. And the children receive lucky money wrapped in red tiny envelopes</button>
+                    <button class="option-btn" data-opt="D">D. the whole family gets together for a reunion dinner</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Bổ sung thông tin song hành:</strong> Câu trước nói về việc đi chúc Tết hàng xóm, bạn bè họ hàng gần xa. Phương án B "They also like to visit their grandparents and relatives" tiếp tục mở rộng bổ sung đối tượng yêu thích đi thăm hỏi trong những ngày Tết ấm áp. Chọn B.</p>
+                </div>
+            </div>
+
+            <!-- Ex5.2 Blank 1 -->
+            <div class="exercise-block" id="ex5-2-q1" data-correct="C">
+                <div class="question-title"><strong>Question 5 (❼-Paragraph 2-Blank 1):</strong> ...have a birthday tree planted when the new child is born. (1) ______ The tradition of birthday parties...</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. They believed that trees contained special protective powers.</button>
+                    <button class="option-btn" data-opt="B">B. Giving gifts brought even more good cheer to ward off the evil spirits.</button>
+                    <button class="option-btn" data-opt="C">C. This was done as they believed that if the tree grew to be healthy and strong, the child would also.</button>
+                    <button class="option-btn" data-opt="D">D. It was feared that evil spirits searched out people on their birthdays.</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Cơ chế liên kết nguyên nhân - kết quả:</strong> Câu trước nói về việc "trồng một cái cây khi đứa trẻ chào đời". Câu C giải thích mục đích lý do tại sao làm vậy: "This was done as they believed..." (Điều này được làm vì họ tin rằng nếu cây lớn lên khỏe mạnh, đứa trẻ cũng sẽ như vậy). Từ "This" thay thế trọn vẹn cho việc trồng cây ở câu trước. Chọn C.</p>
+                </div>
+            </div>
+
+            <!-- Ex5.2 Blank 2 -->
+            <div class="exercise-block" id="ex5-2-q2" data-correct="D">
+                <div class="question-title"><strong>Question 6 (❼-Paragraph 2-Blank 2):</strong> The tradition of birthday parties began in Europe centuries ago. (2) ______ To protect the birthday person from harm...</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. They believed that trees contained special protective powers.</button>
+                    <button class="option-btn" data-opt="B">B. Giving gifts brought even more good cheer to ward off the evil spirits.</button>
+                    <button class="option-btn" data-opt="C">C. This was done as they believed that if the tree grew to be healthy and strong, the child would also.</button>
+                    <button class="option-btn" data-opt="D">D. It was feared that evil spirits searched out people on their birthdays.</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Mối quan hệ ngữ nghĩa:</strong> Câu tiếp theo nói về việc "Để bảo vệ người sinh nhật khỏi hiểm nguy, tai họa (protect from harm)". Lý do tại sao phải bảo vệ được làm rõ ở câu D: "Người ta sợ rằng các linh hồn ác quỷ (evil spirits) sẽ tìm bắt người ta vào ngày sinh nhật". Chọn D làm tiền đề giải thích cho hành động bảo vệ phía sau.</p>
+                </div>
+            </div>
+
+            <!-- Ex5.2 Blank 3 -->
+            <div class="exercise-block" id="ex5-2-q3" data-correct="B">
+                <div class="question-title"><strong>Question 7 (❼-Paragraph 2-Blank 3):</strong> ...friends and family would gather around them and bring good thoughts and wishes. (3) ______ At first, only kings...</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. They believed that trees contained special protective powers.</button>
+                    <button class="option-btn" data-opt="B">B. Giving gifts brought even more good cheer to ward off the evil spirits.</button>
+                    <button class="option-btn" data-opt="C">C. This was done as they believed that if the tree grew to be healthy and strong, the child would also.</button>
+                    <button class="option-btn" data-opt="D">D. It was feared that evil spirits searched out people on their birthdays.</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Từ khóa tương đồng (Lexical cohesion):</strong> Tiếp nối ý tưởng tụ họp để xua đuổi tà ma ở câu trước (đã mang tới những lời chúc tốt đẹp), câu B bổ sung thêm một hành động nữa: "Giving gifts brought even more good cheer to ward off the evil spirits" (Tặng quà mang lại niềm vui lớn hơn để xua đuổi tà ma). Từ "evil spirits" đồng bộ với nỗi sợ hãi tâm linh đang nói tới. Chọn B.</p>
+                </div>
+            </div>
+
+            <!-- Ex5.2 Blank 4 -->
+            <div class="exercise-block" id="ex5-2-q4" data-correct="A">
+                <div class="question-title"><strong>Question 8 (❼-Paragraph 2-Blank 4):</strong> At first, only kings and royalty were recognized as important enough to have a birthday celebration. (4) ______</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-opt="A">A. They believed that trees contained special protective powers.</button>
+                    <button class="option-btn" data-opt="B">B. Giving gifts brought even more good cheer to ward off the evil spirits.</button>
+                    <button class="option-btn" data-opt="C">C. This was done as they believed that if the tree grew to be healthy and strong, the child would also.</button>
+                    <button class="option-btn" data-opt="D">D. It was feared that evil spirits searched out people on their birthdays.</button>
+                </div>
+                <div class="explanation-box">
+                    <h4>Mâm giải thích của Thạc sỹ 🌟</h4>
+                    <p><strong>Phương pháp loại trừ phương án cuối cùng:</strong> Sau khi các vị trí khác đã tìm được mảnh ghép hoàn hảo và thuyết phục, đáp án A chính là mảnh ghép còn lại cuối cùng cho câu số 4 này theo đúng bộ dữ liệu đề bài gốc ban đầu cung cấp. Chọn A.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- REPORT SCORE MODAL -->
+    <div class="modal" id="score-modal">
+        <div class="modal-content">
+            <h2 style="color: #00C9A7;">🎉 KẾT QUẢ BÀI LÀM 🎉</h2>
+            <div class="modal-score" id="final-score-text">0 / 0</div>
+            <div class="modal-comment" id="final-comment-text">Cố lên nhé học trò ơi!</div>
+            <button class="close-modal-btn" onclick="closeModal()">ĐÓNG BẢNG ĐIỂM</button>
+        </div>
+    </div>
+
+    <script>
+        // Audio API generation without external assets
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(type) {
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (type === 'correct') {
+                // Ding sound
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+                osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); // E5
+                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.4);
+            } else if (type === 'wrong') {
+                // Téo tèo teo descending sound
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(220, audioCtx.currentTime); // A3
+                osc.frequency.setValueAtTime(147, audioCtx.currentTime + 0.15); // D3
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.4);
+            }
+        }
+
+        // Confetti effect implementation
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        let pieces = [];
+        let animationFrameId;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function createConfetti() {
+            pieces = [];
+            for (let i = 0; i < 100; i++) {
+                pieces.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    rotation: Math.random() * 360,
+                    color: ['#8854C0', '#00C9A7', '#FDCB6E', '#FF4757', '#00D26A'][Math.floor(Math.random() * 5)],
+                    speed: 3 + Math.random() * 5,
+                    r: 6 + Math.random() * 6
+                });
+            }
+        }
+
+        function updateConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            pieces.forEach((p) => {
+                p.y += p.speed;
+                p.rotation += p.speed;
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.rotate((p.rotation * Math.PI) / 180);
+                ctx.fillStyle = p.color;
+                ctx.fillRect(-p.r, -p.r, p.r * 2, p.r * 2);
+                ctx.restore();
+            });
+            pieces = pieces.filter(p => p.y < canvas.height);
+            if (pieces.length > 0) {
+                animationFrameId = requestAnimationFrame(updateConfetti);
+            }
+        }
+
+        function triggerConfetti() {
+            cancelAnimationFrame(animationFrameId);
+            createConfetti();
+            updateConfetti();
+        }
+
+        // Timer Logic
+        let timeLeft = 600; // 10 minutes in seconds
+        let timerInterval = null;
+        let isPaused = true;
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer-display').innerText = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function toggleTimer() {
+            const btn = document.getElementById('timer-toggle-btn');
+            if (isPaused) {
+                isPaused = false;
+                btn.innerText = "TẠM DỪNG TÍNH GIỜ";
+                btn.style.background = "#FF4757";
+                btn.style.boxShadow = "0 4px 0 #cc2936";
+                timerInterval = setInterval(() => {
+                    if (timeLeft > 0) {
+                        timeLeft--;
+                        updateTimerDisplay();
+                    } else {
+                        clearInterval(timerInterval);
+                        alert("Đã hết giờ làm bài. Bạn vẫn có thể tiếp tục làm, nhưng nhớ là trong phòng thi thật, bạn chỉ nên làm một bài như thế này trong 10 phút thôi nha.");
+                        btn.innerText = "HẾT GIỜ";
+                        btn.disabled = true;
+                    }
+                }, 1000);
+            } else {
+                isPaused = true;
+                btn.innerText = "TIẾP TỤC LÀM BÀI";
+                btn.style.background = "#00C9A7";
+                btn.style.boxShadow = "0 4px 0 #00967c";
+                clearInterval(timerInterval);
+            }
+        }
+
+        // Translation toggle
+        function toggleTranslation(id) {
+            const transBox = document.getElementById(id);
+            if (transBox.style.display === "block") {
+                transBox.style.display = "none";
+            } else {
+                transBox.style.display = "block";
+            }
+        }
+
+        // Handle option clicks & auto-shuffle options on load
+        document.querySelectorAll('.exercise-block').forEach((block) => {
+            const correctOpt = block.getAttribute('data-correct');
+            const optionsContainer = block.querySelector('.options-grid');
+            const explanationBox = block.querySelector('.explanation-box');
+            const buttons = Array.from(block.querySelectorAll('.option-btn'));
+
+            // Shuffle array logic for options inside this question card
+            buttons.sort(() => Math.random() - 0.5);
+            optionsContainer.innerHTML = '';
+            buttons.forEach(btn => optionsContainer.appendChild(btn));
+
+            // Setup click events
+            buttons.forEach((btn) => {
+                btn.addEventListener('click', function() {
+                    const chosenOpt = this.getAttribute('data-opt');
+                    
+                    // Disable all buttons in this block once clicked
+                    buttons.forEach(b => b.style.pointerEvents = 'none');
+
+                    if (chosenOpt === correctOpt) {
+                        this.classList.add('correct');
+                        playSound('correct');
+                        triggerConfetti();
+                    } else {
+                        this.classList.add('incorrect');
+                        playSound('wrong');
+                        // Instantly reveal the correct choice
+                        buttons.forEach((b) => {
+                            if (b.getAttribute('data-opt') === correctOpt) {
+                                b.classList.add('correct');
+                            }
+                        });
+                    }
+                    // Expand and display master's detailed explanations
+                    explanationBox.style.display = "block";
+                    block.setAttribute('data-answered', chosenOpt === correctOpt ? "true" : "false");
+                });
+            });
+        });
+
+        // Submit and calculate total score
+        function submitAssessment() {
+            const totalQuestions = document.querySelectorAll('.exercise-block').length;
+            let correctCount = 0;
+
+            document.querySelectorAll('.exercise-block').forEach((block) => {
+                if (block.getAttribute('data-answered') === "true") {
+                    correctCount++;
+                }
+            });
+
+            // Comments algorithm based on achievements
+            let comment = "";
+            const ratio = correctCount / totalQuestions;
+            if (ratio === 1) {
+                comment = "🥇 THIÊN TÀI TIẾNG ANH XUẤT SẮC! Cậu là niềm tự hào của Ms Lê Hằng English đó!";
+                triggerConfetti();
+            } else if (ratio >= 0.7) {
+                comment = "🌟 LÀM TỐT LẮM! Kiến thức rất vững vàng, phát huy tiếp con nhé!";
+            } else if (ratio >= 0.5) {
+                comment = "👍 KHÁ TỐT! Đọc thêm phần giải thích chi tiết để đạt điểm tuyệt đối nha!";
+            } else {
+                comment = "💪 CỐ LÊN NHÉ! Đừng nản chí, đọc kỹ mâm giải thích của cô để lần sau làm siêu hơn!";
+            }
+
+            document.getElementById('final-score-text').innerText = `${correctCount} / ${totalQuestions}`;
+            document.getElementById('final-comment-text').innerText = comment;
+            document.getElementById('score-modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('score-modal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
